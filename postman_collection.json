@@ -1,0 +1,121 @@
+
+{
+  "info": {
+    "name": "RavenScan API",
+    "description": "Brand Intelligence API endpoints",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-API-Key",
+        "type": "string"
+      },
+      {
+        "key": "value",
+        "value": "RavenScan_API_KEY",
+        "type": "string"
+      }
+    ]
+  },
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/",
+          "host": ["{{baseUrl}}"],
+          "path": [""]
+        }
+      }
+    },
+    {
+      "name": "Check Brand Name",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/check?name=testbrand&tlds=com,net,org&include_seo=true&include_socials=true",
+          "host": ["{{baseUrl}}"],
+          "path": ["check"],
+          "query": [
+            {
+              "key": "name",
+              "value": "testbrand"
+            },
+            {
+              "key": "tlds",
+              "value": "com,net,org"
+            },
+            {
+              "key": "include_seo",
+              "value": "true"
+            },
+            {
+              "key": "include_socials",
+              "value": "true"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Frontend Login",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"test@example.com\",\n  \"password\": \"test123\"\n}"
+        },
+        "url": {
+          "raw": "{{frontendUrl}}/api/login",
+          "host": ["{{frontendUrl}}"],
+          "path": ["api", "login"]
+        }
+      }
+    },
+    {
+      "name": "Submit Feedback",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"rating\": \"positive\",\n  \"query\": \"testbrand\"\n}"
+        },
+        "url": {
+          "raw": "{{frontendUrl}}/api/feedback",
+          "host": ["{{frontendUrl}}"],
+          "path": ["api", "feedback"]
+        }
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://ravenscan-api.etmunson91.replit.app",
+      "type": "string"
+    },
+    {
+      "key": "frontendUrl",
+      "value": "http://localhost:3000",
+      "type": "string"
+    }
+  ]
+}

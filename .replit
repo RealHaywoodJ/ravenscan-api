@@ -38,3 +38,6 @@ mode = "sequential"
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "python -m uvicorn main:app --host 0.0.0.0 --port 8000"
+
+[nix]
+channel = "stable-24_05"
