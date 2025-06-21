@@ -1,0 +1,53 @@
+Hi Replit AI—please set up a full frontend for my RavenScan API project with the following requirements:
+
+1. **Project Setup**  
+   - Create a Next.js app in a folder named `ravenscan-frontend`.  
+   - Install dependencies: `react`, `next`, `tailwindcss`, `postcss`, `autoprefixer`, and `@replit/database`.
+
+2. **Tailwind CSS Configuration**  
+   - Initialize Tailwind (`npx tailwindcss init -p`).  
+   - In `tailwind.config.js`, enable dark mode (`darkMode: 'class'`) and configure content paths for `./pages/**/*.{js,ts,jsx,tsx}` and `./components/**/*.{js,ts,jsx,tsx}`.  
+   - Add `@tailwind base; @tailwind components; @tailwind utilities;` to `styles/globals.css`.  
+   - Extend theme palette for a primary brand color.
+
+3. **Global Layout & Dark Mode**  
+   - Create a `components/Navbar.js` with logo, links (Home, Dashboard), a dark-mode toggle that adds/removes the `dark` class on `<html>`, and a mobile hamburger menu.  
+   - Implement theme persistence via `localStorage` and respect `prefers-color-scheme` on initial load.
+
+4. **Pages & Routing**  
+   - **`/pages/index.js` (Home/Search Page):**  
+     - Display a hero with a SearchForm component that allows one or multiple name inputs.  
+     - On submit, call `https://ravenscan-api.etmunson91.replit.app/check?name=<name>` (or batch) and show results below.  
+     - Auto-save searches for logged-in users; prompt anonymous users to log in to save history.  
+   - **`/pages/dashboard.js` (History):**  
+     - Protected route: list saved search queries from Replit DB (`@replit/database`), showing query text and timestamp.  
+     - Each entry has “Re-run” and “Delete” buttons.  
+   - **`/pages/login.js` & `/pages/signup.js`:**  
+     - Create AuthForm component(s) for email/password with client-side and server-side validation.  
+     - On signup/login, call Next.js API routes (`/api/signup`, `/api/login`) built below, set an HTTP-only cookie, and redirect to Dashboard.  
+
+5. **Next.js API Routes**  
+   - **`/pages/api/signup.js`:** Hash password (bcrypt), store `{ email, passwordHash, history: [] }` in Replit DB under `user:<id>`, set JWT session cookie.  
+   - **`/pages/api/login.js`:** Verify credentials, set session cookie.  
+   - **`/pages/api/logout.js`:** Clear cookie.  
+   - **`/pages/api/history.js`:** GET returns `user.history`; POST appends new searches; DELETE removes entries.
+
+6. **Components & UX**  
+   - **SearchForm:** handles input validation, error messages, “+ Add another” for multiple names, and disabled/loading states with a spinner.  
+   - **ResultCard / ResultTable:** display API results per username or per platform, color-coded (green/red) with Tailwind styling and responsive grid.  
+   - **HistoryList:** renders saved searches with re-run and delete actions.  
+   - **FeedbackWidget:** emoji reaction bar under results (😃 😐 😢) that POSTs feedback to `/api/feedback`.  
+   - **LoadingSpinner:** reusable spinner styled with `animate-spin`.  
+   - **Toast Notifications:** success/error toasts for actions like save/delete/login/signup, using a small toast provider or `react-hot-toast`.
+
+7. **Styling & Responsiveness**  
+   - Mobile-first design: flex/grid layouts that adapt at `md`, `lg` breakpoints.  
+   - Buttons, inputs, and cards use consistent Tailwind utility classes with hover, focus, and disabled variants.  
+   - Dark mode: elements use paired classes (`bg-white dark:bg-gray-900`, `text-gray-800 dark:text-gray-200`).  
+
+8. **Replit Deployment**  
+   - Add a `.replit` file with `run = "npm run build && npm run start"` and specify any required env vars (JWT secret, REPLIT_DB_URL).  
+   - Use Replit Secrets for all sensitive keys.  
+   - Ensure `@replit/database` is configured and available on deploy.
+
+Please configure and scaffold all files, folders, and code so that the app builds and runs on Replit with `npm run dev` (development) and `npm run build && npm run start` (production). Thank you!  
