@@ -1,4 +1,3 @@
-
 'use client';
 import { useState, useEffect } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
@@ -13,7 +12,7 @@ export default function Home() {
   useEffect(() => {
     const savedApiKey = localStorage.getItem('ravenscan-api-key');
     if (savedApiKey) setApiKey(savedApiKey);
-    
+
     const savedTheme = localStorage.getItem('theme');
     const isDark = savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches);
     setIsDarkMode(isDark);
@@ -34,7 +33,7 @@ export default function Home() {
 
   const handleSearch = async (e) => {
     e.preventDefault();
-    
+
     if (!searchName.trim() || searchName.length < 3) {
       toast.error('Please enter at least 3 characters');
       return;
@@ -46,11 +45,11 @@ export default function Home() {
     }
 
     setIsLoading(true);
-    
+
     try {
-      const response = await fetch(`https://ravenscan-api.etmunson91.replit.app/check?name=${encodeURIComponent(searchName)}`, {
+      const response = await fetch(`https://ravenscan-api.etmunson91.replit.app/v1/check?name=${encodeURIComponent(searchName)}`, {
         headers: {
-          'x-api-key': apiKey,
+          'Authorization': `Bearer ${apiKey || 'RavenScan_API_KEY'}`,
           'Content-Type': 'application/json',
         },
       });
@@ -61,18 +60,18 @@ export default function Home() {
 
       const data = await response.json();
       setResults(data);
-      
+
       // Save to history
       const historyItem = {
         query: searchName,
         date: new Date().toISOString(),
         results: data
       };
-      
+
       const history = JSON.parse(localStorage.getItem('search-history') || '[]');
       history.unshift(historyItem);
       localStorage.setItem('search-history', JSON.stringify(history.slice(0, 50))); // Keep last 50
-      
+
       toast.success('✅ Search completed and saved!');
     } catch (error) {
       console.error('Search error:', error);
@@ -98,7 +97,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-colors">
       <Toaster position="top-right" />
-      
+
       <div className="container mx-auto px-4 py-8 max-w-4xl">
         <header className="text-center mb-8">
           <div className="flex justify-between items-center mb-6">
@@ -178,7 +177,7 @@ export default function Home() {
           <div className="space-y-6">
             <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6">
               <h2 className="text-2xl font-semibold mb-4">Results for "{results.brand_name}"</h2>
-              
+
               {/* Domains */}
               {results.domains && Object.keys(results.domains).length > 0 && (
                 <div className="mb-6">

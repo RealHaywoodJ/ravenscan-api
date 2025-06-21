@@ -30,9 +30,11 @@ from redis.asyncio import Redis
 
 # ─── App Initialization ────────────────────────────────────────────────────────
 app = FastAPI(
-    title="RavenScan_API",
-    description="BrandRaven’s Enhanced Brand Intelligence API",
-    version="2.0"
+    title="RavenScan_API", 
+    description="BrandRaven's Enhanced Brand Intelligence API",
+    version="2.0",
+    docs_url="/docs",
+    openapi_url="/openapi.json"
 )
 
 app.add_middleware(
