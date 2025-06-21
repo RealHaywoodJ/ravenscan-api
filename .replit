@@ -8,3 +8,33 @@ externalPort = 3000
 [[ports]]
 localPort = 8000
 externalPort = 80
+
+[workflows]
+runButton = "Frontend Build & Start"
+
+[[workflows.workflow]]
+name = "Frontend Dev"
+author = 34114272
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd ravenscan-frontend && npm run dev"
+
+[[workflows.workflow]]
+name = "Frontend Build & Start"
+author = 34114272
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd ravenscan-frontend && npm run build && npm run start"
+
+[[workflows.workflow]]
+name = "Run API"
+author = 34114272
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "python -m uvicorn main:app --host 0.0.0.0 --port 8000"
