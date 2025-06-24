@@ -123,7 +123,8 @@ async def check_name(
     include_suggestions: bool = True,
     x_api_key: Optional[str] = Header(None, alias="x-api-key")
 ) -> JSONResponse:
-    if x_api_key != "RavenScan_API_KEY":
+    expected_api_key = os.getenv("RAVENSCAN_API_KEY")
+    if not expected_api_key or x_api_key != expected_api_key:
         raise HTTPException(status_code=401, detail="Invalid API key")
 
     # Domains check
