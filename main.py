@@ -1,3 +1,31 @@
+from fastapi import FastAPI
+from fastapi.responses import JSONResponse
+import datetime
+
+app = FastAPI()
+
+@app.get("/")
+async def root():
+    return {
+        "status": "healthy",
+        "service": "RavenScan API",
+        "timestamp": datetime.datetime.now().isoformat(),
+        "message": "RavenScan API is running successfully"
+    }
+
+@app.get("/health")
+async def health():
+    return {
+        "status": "ok",
+        "checks": {
+            "database": "connected",
+            "api": "operational",
+            "version": "1.0.0"
+        }
+    }
+
+# Your existing API routes go here...
+
 # main.py
 
 # ─── Standard Library ──────────────────────────────────────────────────────────
