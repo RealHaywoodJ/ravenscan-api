@@ -95,8 +95,7 @@ async def startup_limiter():
 
 # ─── Constants ─────────────────────────────────────────────────────────────────
 COMMON_TLDS = [
- ".com", ".net", ".org", ".io", ".co", ".ai", ".app", ".dev", ".xyz", ".tech", ".site", ".online", ".store", ".info", ".me", ".cloud", ".live", ".space", ".blog", ".design", ".network", ".software", ".digital", ".solutions", ".tools", ".studio", ".systems", ".services", ".world", ".agency", ".media", ".company", ".business", ".consulting", ".finance", ".capital", ".ventures", ".today", ".partners", ".global", ".team", ".support", ".web", ".works", ".expert", ".tips", ".technology", ".training", ".video", ".watch", ".bio", ".art", ".health", ".eco", ".love", ".baby", ".shop", ".fans", ".game", ".games", ".link", ".page", ".press", ".news", ".life", ".run", ".name", ".email", ".chat", ".eth", ".crypto", ".nft", ".dao", ".zil", ".x", ".blockchain", ".bit", ".wallet
-    # You can trim or extend this list as needed...
+    ".com", ".net", ".org", ".io", ".co", ".ai", ".app", ".dev", ".xyz", ".tech", ".site", ".online", ".store", ".info", ".me", ".cloud", ".live", ".space", ".blog", ".design", ".network", ".software", ".digital", ".solutions", ".tools", ".studio", ".systems", ".services", ".world", ".agency", ".media", ".company", ".business", ".consulting", ".finance", ".capital", ".ventures", ".today", ".partners", ".global", ".team", ".support", ".web", ".works", ".expert", ".tips", ".technology", ".training", ".video", ".watch", ".bio", ".art", ".health", ".eco", ".love", ".baby", ".shop", ".fans", ".game", ".games", ".link", ".page", ".press", ".news", ".life", ".run", ".name", ".email", ".chat", ".eth", ".crypto", ".nft", ".dao", ".zil", ".x", ".blockchain", ".bit", ".wallet"
 ]
 
 RDAP_BASE_URL = "https://rdap.org/domain/"
