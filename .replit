@@ -1,13 +1,5 @@
-run = "uvicorn main:app --host 0.0.0.0 --port=$PORT"
-modules = ["nodejs-20"]
-
-[[ports]]
-localPort = 3000
-externalPort = 3000
-
-[[ports]]
-localPort = 8000
-externalPort = 80
+run = "uvicorn main:app --host=0.0.0.0 --port=3000"
+modules = ["nodejs-20", "python-3.11"]
 
 [workflows]
 runButton = "Run API"
@@ -37,12 +29,16 @@ mode = "sequential"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "python -m uvicorn main:app --host 0.0.0.0 --port 8000"
+args = "uvicorn main:app --host=0.0.0.0 --port=3000"
 
 [nix]
 channel = "stable-24_05"
-packages = ["python312Packages.uvicorn"]
+packages = ["cacert", "glibcLocales", "libxcrypt", "python312", "python312Packages.fastapi", "python312Packages.pip", "python312Packages.pydantic", "python312Packages.uvicorn", "xcodebuild", "zlib"]
 
 [deployment]
 deploymentTarget = "cloudrun"
-run = ["sh", "-c", "uvicorn main:app --host 0.0.0.0 --port 8000"]
+run = ["sh", "-c", "uvicorn main:app --host=0.0.0.0 --port=80"]
+
+[[ports]]
+localPort = 3000
+externalPort = 80
