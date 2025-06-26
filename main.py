@@ -10,6 +10,11 @@ from bs4 import BeautifulSoup
 from typing import Optional
 from urllib.parse import urlparse
 
+# ─── Enviroment Variable Imports ───────────────────────────────────────────────
+from dotenv import load_dotenv
+load_dotenv()
+
+
 # ─── App Initialization ────────────────────────────────────────────────────────
 app = FastAPI(
     title="RavenScan API", 
@@ -81,11 +86,35 @@ def check_social_handles(name: str) -> dict:
     for platform, tpl in SOCIAL_PLATFORMS.items():
         url = tpl.format(name=key)
         try:
-            r = requests.head(url, allow_redirects=True, timeout=5)
-            out[platform] = "taken" if r.status_code == 200 else "available"
+            r = requests.get(url, timeout=5, headers={"User-Agent": "Mozilla/5.0"})
+            html = r.text.lower()
+
+            if platform == "x":
+                if "this account doesn’t exist" in html or "page doesn’t exist" in html:
+                    out[platform] = "available"
+                else:
+                    out[platform] = "taken"
+
+            elif platform == "instagram":
+                if "sorry, this page isn't available" in html:
+                    out[platform] = "available"
+                else:
+                    out[platform] = "taken"
+
+            elif platform == "youtube":
+                if "channel does not exist" in html or "404" in html:
+                    out[platform] = "available"
+                else:
+                    out[platform] = "taken"
+
+            else:
+                out[platform] = "taken" if r.status_code == 200 else "available"
+
         except Exception:
             out[platform] = "error"
+
     return out
+
 
 def generate_suggestions(name: str) -> list:
     return [
